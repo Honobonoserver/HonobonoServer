@@ -1,0 +1,10 @@
+Motd:
+- Welcome to HonobonoServer
+
+Elevator:
+- REDSTONE_BLOCK:8
+- LAPIS_BLOCK:16
+- IRON_BLOCK:32
+- EMERALD_BLOCK:64
+- GOLD_BLOCK:128
+- DIAMOND_BLOCK:256
