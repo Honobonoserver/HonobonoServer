@@ -44,6 +44,7 @@ public class SQLite {
 	}
 
 	private Statement state;
+	private LinkedHashMap<String, Casts[]> map;
 
 	/**
 	 * インスタンス生成メソッド
@@ -58,16 +59,14 @@ public class SQLite {
 		this.state = con.createStatement();
 	}
 
-	/**
-	 * テーブルを作成します。すでにある場合には作成せず終了します
-	 *
-	 * @param table テーブル名
-	 * @param map   String: カラム名   Casts[]: 対応する変数の型
-	 * @throws SQLException
-	 */
-	public void create(String table, LinkedHashMap<String, Casts[]> map) throws SQLException {
+	public SQLite add(String table, Casts... args) {
+		this.map.put(table, args);
+		return this;
+	}
+
+	public void create(String table) throws SQLException {
 		String sql = "CREATE TABLE IF NOT EXISTS \"" + table + "\"(";
-		for (Map.Entry<String, Casts[]> e : map.entrySet()) {
+		for (Map.Entry<String, Casts[]> e : this.map.entrySet()) {
 			sql += "\"" + e.getKey() + "\" ";
 			for (Casts s : e.getValue()) {
 				sql += s.toString() + " ";
@@ -77,6 +76,18 @@ public class SQLite {
 		sql = sql.substring(0, sql.length() - 1);
 		sql += ");";
 		executeUpdate(sql);
+	}
+
+	/**
+	 * テーブルを作成します。すでにある場合には作成せず終了します
+	 *
+	 * @param table テーブル名
+	 * @param map   String: カラム名   Casts[]: 対応する変数の型
+	 * @throws SQLException
+	 */
+	public void create(String table, LinkedHashMap<String, Casts[]> map) throws SQLException {
+		this.map = map;
+		this.create(table);
 	}
 
 	/**
