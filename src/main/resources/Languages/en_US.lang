@@ -1,0 +1,52 @@
+honobonoserver:
+    adminchat:
+        add: "Enter to AdminChat"
+        remove: "Exiting AdminChat"
+    freeze:
+        add: "<Target>freezed"
+        remove: "<Target>unfreezed"
+    mute:
+        add: "<Target>muted"
+        remove: "<Target>unmuted"
+    show:
+        add: "you are invisible"
+        remove: "you are shown by others"
+    display:
+        format: "<Command> by <Player>"
+    home:
+        notexits: "Your home does not exist"
+        resec: "<Time>second remaining for teleport..."
+        move: "tereport canceled:You moved."
+        success: "Home setup complete"
+    look:
+        status: "-----About Player-----"
+        name: "Name: <Name>"
+        uuid: "UUID: <Uuid>"
+        lastlogin: "Last login: <Time>"
+        locale: "setup locale: <Locale>"
+        exp: "exp: <Exp>"
+        health: "HP: <Health>/<MaxHealth>"
+        location:
+            name: "place:"
+            x: "    X: <X>"
+            y: "    Y: <Y>"
+            z: "    Z: <Z>"
+            pitch: "    Pitch: <Pitch>"
+            yaw: "    Yaw: <Yaw>"
+        hostname: "Hostname: <Name>"
+    loginmessage:
+        joinmessage: "<Player> joined this server"
+        firstjoin:
+          - "Hi <Player>. It's your first time to join"
+          - "Welcome to Honobono server"
+        joinplayer:
+          - "Hi <Player> . Welcome to honobono server."
+          - ""
+          - "&5+-----------&aServer Info&5-----------+"
+          - "&5|&e  No any infomations     &5|"
+          - "&5+---------------------------------+"
+        quitmessage: "<Player> left server"
+    warning:
+        ingame: "You must do this in the game"
+        arguments: "Not enough argument"
+        invalidname: "This username invailed"
