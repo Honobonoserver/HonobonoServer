@@ -19,61 +19,42 @@ import co.honobono.honobonoserver.constructor.RegistManager.AddListener;
 
 
 @AddListener
-public class ElevatorListener implements Listener{
+public class ElevatorListener implements Listener {
+	private static Map<Material, Integer> blocks = null;
 
-	private Map<Material, Integer> bls = new HashMap<Material, Integer>();{
-		for (String a : HonobonoServer.getConfigFile().getStringList("Elevator")) {
+	public ElevatorListener(HonobonoServer plugin) {
+		if(blocks != null) return;
+		blocks = new HashMap<>();
+		for (String a : plugin.getConfigFile().getStringList("Elevator")) {
 			String[] b = a.split(":");
-			bls.put(Material.getMaterial(b[0]), Integer.valueOf(b[1]));
+			blocks.put(Material.getMaterial(b[0]), Integer.valueOf(b[1]));
 		}
 	}
 
 	@EventHandler
 	public void elevatorup(PlayerStatisticIncrementEvent event) {
-		if (event.getStatistic() != Statistic.JUMP) return;
-		Player player = event.getPlayer();
-		Location loc = player.getLocation().clone();
-		Material m = loc.subtract(0, 1, 0).getBlock().getType();
-		if (!bls.containsKey(m)) return;
-		int scope = bls.get(m);
-		for (int i = 0; i < scope; i++) {
-			loc.setY(loc.getY() + 1);
-			if (loc.getBlock().getType() != m) continue;
-			if (loc.add(0, 1, 0).getBlock().getType().isTransparent()
-					&& loc.add(0, 1, 0).getBlock().getType().isTransparent()) {
-				player.teleport(loc.subtract(0, 1, 0));
-				player.playSound(loc, Sound.ENDERMAN_TELEPORT, 10, 1);
-				player.getLocation().getWorld().playEffect(player.getLocation(), Effect.PORTAL, 5);
-				return;
-			}
-		}
+		if (event.getStatistic() == Statistic.JUMP) this.Process(event.getPlayer(), true);
 	}
 
 	@EventHandler
 	public void elevatordown(PlayerToggleSneakEvent event) {
-		if (event.isSneaking() == false) {
-			return;
-		}
-		Player player = event.getPlayer();
+		if (event.isSneaking()) this.Process(event.getPlayer(), false);
+	}
+
+	private void Process(Player player, boolean up) {
 		Location loc = player.getLocation().clone();
 		Material m = loc.subtract(0, 1, 0).getBlock().getType();
-		if (!bls.containsKey(m)) {
-			return;
-		}
-		int scope = bls.get(m);
+		if (!blocks.containsKey(m)) return;
+		int scope = blocks.get(m);
 		for (int i = 0; i < scope; i++) {
-			loc.setY(loc.getY() - 1);
-			if (loc.getBlock().getType() != m) {
-				continue;
-			}
-			if (loc.add(0, 1, 0).getBlock().getType().isTransparent()
-					&& loc.add(0, 1, 0).getBlock().getType().isTransparent()) {
-				player.teleport(loc.subtract(0, 1, 0));
+			loc.setY(loc.getY() + (up ? 1 : -1));
+			if (loc.getBlock().getType() == m
+					&& loc.clone().add(0, 1, 0).getBlock().getType().isTransparent()
+					&& loc.clone().add(0, 1, 0).getBlock().getType().isTransparent()) {
+				player.teleport(loc.add(0, 1, 0));
 				player.playSound(loc, Sound.ENDERMAN_TELEPORT, 10, 1);
-				player.getLocation().getWorld().playEffect(player.getLocation(), Effect.PORTAL, 5);
+				loc.getWorld().playEffect(loc, Effect.PORTAL, 5);
 				break;
-			} else {
-				continue;
 			}
 		}
 	}

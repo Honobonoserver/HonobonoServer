@@ -20,7 +20,6 @@ import co.honobono.honobonoserver.constructor.SQLite;
 
 @AddListener
 public class HomeListener implements Listener {
-	private static SQLite sql = HonobonoServer.getSQLite();
 	private HonobonoServer plugin;
 
 	public HomeListener(HonobonoServer plugin) {
@@ -33,7 +32,7 @@ public class HomeListener implements Listener {
 		if (event.getClickedBlock().getType() != Material.BED_BLOCK) return;
 		Location bed = event.getClickedBlock().getLocation();
 		try {
-			sql.checkPut("Home", "PlayerUUID", event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(),
+			this.plugin.getSQLite().checkPut("Home", "PlayerUUID", event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(),
 					SQLite.getTimeStamp(), bed.getWorld().getName(), bed.getBlockX(), bed.getBlockY(), bed.getBlockZ());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -43,16 +42,16 @@ public class HomeListener implements Listener {
 
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent event) {
-		Location loc = getHome(event.getPlayer());
+		Location loc = getHome(this.plugin, event.getPlayer());
 		if (loc != null) {
 			event.setRespawnLocation(loc);
 		}
 	}
 
-	public static Location getHome(Player player) {
+	public static Location getHome(HonobonoServer plugin, Player player) {
 		String UUID = player.getUniqueId().toString();
 		try {
-			ResultSet result = sql.get("Home", "PlayerUUID", UUID, "Home-World", "Home-X", "Home-Y", "Home-Z");
+			ResultSet result = plugin.getSQLite().get("Home", "PlayerUUID", UUID, "Home-World", "Home-X", "Home-Y", "Home-Z");
 			result.next();
 			Location loc = new Location(Bukkit.getWorld(result.getString(1)), result.getInt(2), result.getInt(3),
 					result.getInt(4));

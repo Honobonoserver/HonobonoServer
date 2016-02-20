@@ -22,20 +22,20 @@ public class LoginMessageListener implements Listener {
 	public void LoginMsg(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.loginmessage.joinmessage"));
+		sb.append(this.plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.loginmessage.joinmessage").replaceAll("<Player>", player.getDisplayName()));
 		if (!(player.hasPlayedBefore())) {
 			sb.append("\n");
 			for (String first : this.plugin.getLanguages().getStringList(player, "honobonoserver.loginmessage.firstjoin")) {
-				Bukkit.broadcastMessage(first);
+				Bukkit.broadcastMessage(first.replaceAll("<Player>", player.getDisplayName()));
 				sb.append("\n");
 			}
 		}
 		event.setJoinMessage(sb.toString());
-		player.sendMessage(this.plugin.getLanguages().getStringList(player, "honobonoserver.loginmessage.joinplayer").toArray(new String[0]));
+		player.sendMessage(this.plugin.getLanguages().getStringList(player, "honobonoserver.loginmessage.joinplayer").stream().map(s -> s.replaceAll("<Player>", event.getPlayer().getDisplayName())).toArray(String[]::new));
 	}
 
 	@EventHandler
 	public void LogoutMsg(PlayerQuitEvent event) {
-		event.setQuitMessage(this.plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.loginmessage.quitmessage"));
+		event.setQuitMessage(this.plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.loginmessage.quitmessage").replaceAll("<Player>", event.getPlayer().getDisplayName()));
 	}
 }
