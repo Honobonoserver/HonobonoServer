@@ -152,11 +152,10 @@ public class RegistManager {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private Object getInstance(Class clazz) throws ReflectiveOperationException {
 		if (clazz.isInstance(this.getPlugin())) return this.getPlugin();
-		for (Constructor con : clazz.getDeclaredConstructors()) {
+		for(Constructor con : clazz.getDeclaredConstructors()) {
+			Class[] classes = con.getParameterTypes();
 			con.setAccessible(true);
-			Class[] clazzes = con.getParameterTypes();
-			if (clazzes.length == 1 && (clazzes[0].isAssignableFrom(JavaPlugin.class) || clazzes[0].isAssignableFrom(this.getPlugin().getClass())))
-				return con.newInstance(this.getPlugin());
+			if(classes.length == 1 && classes[0].isInstance(this.getPlugin())) return con.newInstance(this.getPlugin());
 		}
 		return clazz.newInstance();
 	}

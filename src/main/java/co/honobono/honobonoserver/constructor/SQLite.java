@@ -59,8 +59,9 @@ public class SQLite {
 		this.state = con.createStatement();
 	}
 
-	public SQLite add(String table, Casts... args) {
-		this.map.put(table, args);
+	public SQLite add(String column, Casts... args) {
+		if(this.map == null) this.map = new LinkedHashMap<>();
+		this.map.put(column, args);
 		return this;
 	}
 

@@ -7,7 +7,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,8 +19,11 @@ import org.bukkit.plugin.Plugin;
 
 public class LanguageHelper {
 	private Map<String, FileConfiguration> Configs = new HashMap<>();
+	private String defaultLang = null;
 
 	public LanguageHelper(Plugin plugin) throws IOException, InvalidConfigurationException {
+		FileConfiguration f = getConfig(plugin, "config.yml");
+		if(f.isString("DefaultLanguage")) defaultLang = f.getString("DefaultLanguage");
 		JarFile jar = null;
 		try {
 			jar = new JarFile(plugin.getClass().getProtectionDomain().getCodeSource().getLocation().getFile());
@@ -37,46 +42,44 @@ public class LanguageHelper {
 		if(sender instanceof Player) {
 			this.getString((Player)sender, path);
 		}
-		return path;
+		return (defaultLang == null) ? path : this.getString(defaultLang, path);
 	}
 
 	public String getString(Player player, String path) {
 		try {
 			return this.getString(getLocale(player), path);
 		} catch (ReflectiveOperationException e) {
-			e.printStackTrace();
-			return path;
+			return (defaultLang == null) ? path : this.getString(defaultLang, path);
 		}
 	}
 
 	public String getString(String LangName, String path) {
 		if(Configs.containsKey(LangName)) {
-			return Configs.get(LangName).getString(path);
+			return toColor(Configs.get(LangName).getString(path));
 		}
-		return path;
+		return (defaultLang == null) ? path : this.getString(defaultLang, path);
 	}
 
 	public List<String> getStringList(CommandSender sender, String path) {
 		if(sender instanceof Player) {
 			this.getStringList((Player)sender, path);
 		}
-		return Arrays.asList(path);
+		return (defaultLang == null) ? Arrays.asList(path) : this.getStringList(defaultLang, path);
 	}
 
 	public List<String> getStringList(Player player, String path) {
 		try {
 			return this.getStringList(getLocale(player), path);
 		} catch (ReflectiveOperationException e) {
-			e.printStackTrace();
-			return Arrays.asList(path);
+			return (defaultLang == null) ? Arrays.asList(path) : this.getStringList(defaultLang, path);
 		}
 	}
 
 	public List<String> getStringList(String LangName, String path) {
 		if(Configs.containsKey(LangName)) {
-			return Configs.get(LangName).getStringList(path);
+			return Configs.get(LangName).getStringList(path).stream().map(s -> toColor(s)).collect(Collectors.toList());
 		}
-		return Arrays.asList(path);
+		return (defaultLang == null) ? Arrays.asList(path) : this.getStringList(defaultLang, path);
 	}
 
 	public FileConfiguration getConfig(Plugin plugin, String filename) throws IOException, InvalidConfigurationException {
@@ -93,5 +96,10 @@ public class LanguageHelper {
 		Object o = method.invoke(player);
 		Field field = o.getClass().getField("locale");
 		return (String)field.get(o);
+	}
+
+	public static String toColor(String msg) {
+		if(msg == null) return "null";
+		return ChatColor.translateAlternateColorCodes('&', msg);
 	}
 }
