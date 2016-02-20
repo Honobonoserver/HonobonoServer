@@ -7,6 +7,11 @@ import co.honobono.honobonoserver.HonobonoServer;
 import co.honobono.honobonoserver.constructor.RegistManager.AddCommand;
 
 public class HelpCommand {
+	HonobonoServer plugin;
+
+	public HelpCommand(HonobonoServer plugin) {
+		this.plugin = plugin;
+	}
 
 	@AddCommand(Command = "hn")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
@@ -16,7 +21,7 @@ public class HelpCommand {
 
 	@AddCommand(Command = "hn", subCommand = "help")
 	public boolean onCommand2(CommandSender sender, Command cmd, String[] args) {
-		HonobonoServer.getManager().sendHelpMessage(sender, "hn");
+		this.plugin.getManager().sendHelpMessage(sender, "hn");
 		return true;
 	}
 

@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import co.honobono.honobonoserver.constructor.RegistManager.AddCommand;
+import org.bukkit.plugin.Plugin;
 
 public class AdminChatCommand {
 	public static List<Player> Players = new ArrayList<>();
@@ -26,10 +27,10 @@ public class AdminChatCommand {
 		}
 		Player player = (Player) sender;
 		if(Players.contains(player)) {
-			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.adminchat.leave"));
+			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.adminchat.remove"));
 			Players.remove(player);
 		} else {
-			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.adminchat.join"));
+			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.adminchat.add"));
 			Players.add(player);
 		}
 		return true;

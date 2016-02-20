@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import co.honobono.honobonoserver.constructor.RegistManager.AddCommand;
+import org.bukkit.plugin.Plugin;
 
 public class FreezeCommand {
 	public static List<Player> Players = new ArrayList<>();
@@ -27,10 +28,10 @@ public class FreezeCommand {
 		}
 		Player target = Bukkit.getPlayer(args[1]);
 		if(Players.contains(target)) {
-			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.freeze.remove"));
+			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.freeze.remove").replaceAll("<Target>", target.getDisplayName()));
 			Players.remove(target);
 		} else {
-			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.freeze.add"));
+			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.freeze.add").replaceAll("<Target>", target.getDisplayName()));
 			Players.add(target);
 		}
 		return true;

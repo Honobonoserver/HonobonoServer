@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import co.honobono.honobonoserver.constructor.RegistManager.AddCommand;
@@ -25,7 +26,7 @@ public class HomeCommand {
 			return true;
 		}
 		Player player =  (Player) sender;
-		Location loc = HomeListener.getHome(player);
+		Location loc = HomeListener.getHome(this.plugin, player);
 		if (loc == null) {
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.home.notexits"));
 		} else {
@@ -33,11 +34,16 @@ public class HomeCommand {
 			LanguageHelper langs = this.plugin.getLanguages();
 			new BukkitRunnable(){
 				int time = 10;
+				int y = -1;
 				@Override
 				public void run() {
-					if(time == 10 || time <= 4) player.sendMessage(langs.getString(sender, "honobonoserver.home.resec"));
+					if(y == -1) y = loc1.getBlockY();
+					if(time == 10 || time <= 4) player.sendMessage(langs.getString(sender, "honobonoserver.home.resec").replaceAll("<Time>", String.valueOf(time)));
 					time--;
-					if(loc1.getBlockX() != player.getLocation().getBlockX() || loc1.getBlockZ() != player.getLocation().getBlockZ()) {
+					if(loc1.getBlockX() != player.getLocation().getBlockX()
+							|| loc1.getBlockZ() != player.getLocation().getBlockZ()
+							|| y + 1 < player.getLocation().getBlockY()
+							|| y - 1 > player.getLocation().getBlockY()) {
 						player.sendMessage(langs.getString(sender, "honobonoserver.home.move"));
 						this.cancel();
 					}

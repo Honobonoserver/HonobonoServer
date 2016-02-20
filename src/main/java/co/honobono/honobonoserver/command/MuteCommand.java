@@ -31,10 +31,10 @@ public class MuteCommand {
 			return true;
 		}
 		if(Players.contains(player)) {
-			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.mute.remove"));
+			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.mute.remove").replaceAll("<Target>", player.getDisplayName()));
 			Players.remove(player);
 		} else {
-			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.mute.add"));
+			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.mute.add").replaceAll("<Target>", player.getDisplayName()));
 			Players.add(player);
 		}
 		return true;
