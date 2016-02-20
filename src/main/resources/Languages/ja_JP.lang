@@ -12,7 +12,7 @@ honobonoserver:
         add: "非表示状態になりました"
         remove: "非表示状態を解除しました"
     display:
-        format: "<コマンド表示> 使用者: <Player> | <Command>"
+        format: "<Command> by <Player>"
     home:
         notexits: "Homeが登録されていません"
         resec: "テレポートまで残り<Time>秒..."
