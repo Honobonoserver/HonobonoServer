@@ -1,5 +1,7 @@
+DefaultLanguage: ja_JP
+
 Motd:
-- Welcome to HonobonoServer
+- "&eWelcome To &2Honobono &8Server &r&e!! &l[1.8.x]"
 
 Elevator:
 - REDSTONE_BLOCK:8
