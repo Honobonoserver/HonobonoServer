@@ -1,36 +1,38 @@
 honobonoserver:
     adminchat:
-        join: AdminChatに入りました
-        leave: AdminChatから抜けました
+        add: "AdminChatに入りました"
+        remove: "AdminChatから抜けました"
     freeze:
-        add: <Target>をフリーズ対象に登録しました
-        remove: <Target>をフリーズ対象から削除しました
+        add: "<Target>をフリーズ対象に登録しました"
+        remove: "<Target>をフリーズ対象から削除しました"
     mute:
-        add: <Target>をミュート対象に登録しました
-        remove: <Target>をミュート対象から削除しました
+        add: "<Target>をミュート対象に登録しました"
+        remove: "<Target>をミュート対象から削除しました"
     show:
-        add: 非表示状態になりました
-        remove: 非表示状態を解除しました
+        add: "非表示状態になりました"
+        remove: "非表示状態を解除しました"
+    display:
+        format: "<コマンド表示> 使用者: <Player> | <Command>"
     home:
-        notexits: Homeが登録されていません
-        resec: テレポートまで残り<Time>秒...
-        move: 動いたため中止します...
-        success: Homeを登録しました
+        notexits: "Homeが登録されていません"
+        resec: "テレポートまで残り<Time>秒..."
+        move: "動いたため中止します..."
+        success: "Homeを登録しました"
     look:
-        status: -----プレイヤーの詳細-----
+        status: "-----プレイヤーの詳細-----"
         name: "名前: <Name>"
         uuid: "UUID: <Uuid>"
         lastlogin: "最終ログイン時刻: <Time>"
+        locale: "設定言語: <Locale>"
         exp: "経験値: <Exp>"
         health: "体力: <Health>/<MaxHealth>"
-        flight: "飛行許可: <Flight>"
         location:
-            name: 座標
-            x: "X: <X>"
-            y: "Y: <Y>"
-            z: "Z: <Z>"
-            pitch: "Pitch: <Pitch>"
-            yaw: "Yaw: <Yaw>"
+            name: "座標:"
+            x: "    X: <X>"
+            y: "    Y: <Y>"
+            z: "    Z: <Z>"
+            pitch: "    Pitch: <Pitch>"
+            yaw: "    Yaw: <Yaw>"
         hostname: "ホスト名: <Name>"
     loginmessage:
         joinmessage: "&e<Player>さんが&aログイン&eしました"
@@ -39,12 +41,12 @@ honobonoserver:
           - "&eようこそほのぼのサーバへ！"
         joinplayer:
           - "&eようこそ！&l&2ほのぼの&0サーバ&r&eへ！&e<Player>&eさん！"
-          - "   "
+          - ""
           - "&5+-----------&aServer Info&5-----------+"
-          - "&5|&e特筆する情報はありません。     &5|"
+          - "&5|&e  特筆する情報はありません。     &5|"
           - "&5+---------------------------------+"
         quitmessage: "&e<Player>さんが&cログアウト&eしました"
     warning:
-        ingame: ゲーム内から実行してください
-        arguments: 引数が足りません
-        invalidname: 不明なユーザー名が入力されました
+        ingame: "ゲーム内から実行してください"
+        arguments: "引数が足りません"
+        invalidname: "不明なユーザー名が入力されました"
