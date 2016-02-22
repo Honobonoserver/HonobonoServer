@@ -40,7 +40,7 @@ public class LanguageHelper {
 
 	public String getString(CommandSender sender, String path) {
 		if(sender instanceof Player) {
-			this.getString((Player)sender, path);
+			return this.getString((Player)sender, path);
 		}
 		return (defaultLang == null) ? path : this.getString(defaultLang, path);
 	}
@@ -62,7 +62,7 @@ public class LanguageHelper {
 
 	public List<String> getStringList(CommandSender sender, String path) {
 		if(sender instanceof Player) {
-			this.getStringList((Player)sender, path);
+			return this.getStringList((Player)sender, path);
 		}
 		return (defaultLang == null) ? Arrays.asList(path) : this.getStringList(defaultLang, path);
 	}
@@ -98,7 +98,7 @@ public class LanguageHelper {
 		return (String)field.get(o);
 	}
 
-	public static String toColor(String msg) {
+	private static String toColor(String msg) {
 		if(msg == null) return "null";
 		return ChatColor.translateAlternateColorCodes('&', msg);
 	}
