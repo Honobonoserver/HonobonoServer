@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -46,4 +47,7 @@ public class Other {
 		return loc1;
 	}
 
+	public static boolean include(Object obj, Object... objs) {
+		return Arrays.stream(objs).anyMatch(o -> o.equals(obj));
+	}
 }

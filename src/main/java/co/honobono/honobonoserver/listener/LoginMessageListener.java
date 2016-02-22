@@ -10,6 +10,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import co.honobono.honobonoserver.constructor.RegistManager.AddListener;
 
+import java.util.Arrays;
+
 @AddListener
 public class LoginMessageListener implements Listener {
 	private HonobonoServer plugin;
@@ -20,22 +22,18 @@ public class LoginMessageListener implements Listener {
 
 	@EventHandler
 	public void LoginMsg(PlayerJoinEvent event) {
+		event.setJoinMessage("");
 		Player player = event.getPlayer();
-		StringBuilder sb = new StringBuilder();
-		sb.append(this.plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.loginmessage.joinmessage").replaceAll("<Player>", player.getDisplayName()));
-		if (!(player.hasPlayedBefore())) {
-			sb.append("\n");
-			for (String first : this.plugin.getLanguages().getStringList(player, "honobonoserver.loginmessage.firstjoin")) {
-				Bukkit.broadcastMessage(first.replaceAll("<Player>", player.getDisplayName()));
-				sb.append("\n");
-			}
-		}
-		event.setJoinMessage(sb.toString());
-		player.sendMessage(this.plugin.getLanguages().getStringList(player, "honobonoserver.loginmessage.joinplayer").stream().map(s -> s.replaceAll("<Player>", event.getPlayer().getDisplayName())).toArray(String[]::new));
+		Bukkit.getOnlinePlayers().stream().forEach(p -> {
+			p.sendMessage(this.plugin.getLanguages().getString(p, "honobonoserver.loginmessage.joinmessage").replaceAll("<Player>", player.getDisplayName()));
+			if(!player.hasPlayedBefore())p.sendMessage(this.plugin.getLanguages().getStringList(p, "honobonoserver.loginmessage.firstjoin")
+					.stream().map(s -> s.replaceAll("<Player>", player.getDisplayName())).toArray(String[]::new));
+		});
 	}
 
 	@EventHandler
 	public void LogoutMsg(PlayerQuitEvent event) {
-		event.setQuitMessage(this.plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.loginmessage.quitmessage").replaceAll("<Player>", event.getPlayer().getDisplayName()));
+		event.setQuitMessage("");
+		Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.loginmessage.quitmessage").replaceAll("<Player>", event.getPlayer().getDisplayName())));
 	}
 }
