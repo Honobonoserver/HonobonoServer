@@ -1,4 +1,6 @@
 honobonoserver:
+    help:
+        enter: "helpを参照したい場合は/hn helpと入力してください"
     adminchat:
         add: "AdminChatに入りました"
         remove: "AdminChatから抜けました"

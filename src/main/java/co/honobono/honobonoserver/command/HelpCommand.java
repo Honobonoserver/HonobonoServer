@@ -15,7 +15,7 @@ public class HelpCommand {
 
 	@AddCommand(Command = "hn")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
-		sender.sendMessage("You enter the /hn help Command.");
+		sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.help.enter"));
 		return true;
 	}
 

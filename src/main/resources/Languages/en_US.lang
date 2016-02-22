@@ -1,4 +1,6 @@
 honobonoserver:
+    help:
+      enter: "You can enter the /hn help Command."
     adminchat:
         add: "Enter to AdminChat"
         remove: "Exiting AdminChat"
