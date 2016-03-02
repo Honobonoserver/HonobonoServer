@@ -54,7 +54,7 @@ public class ElevatorListener implements Listener {
 					@Override
 					public void run() {
 						player.teleport(loc.add(0, 1, 0));
-						player.playSound(loc, Sound.ENDERMAN_TELEPORT, 10, 1);
+						player.playSound(loc, Sound.ENTITY_ENDERMEN_TELEPORT, 10, 1);
 						loc.getWorld().playEffect(loc, Effect.PORTAL, 5);
 					}
 				}.runTaskLater(this.plugin, 3);

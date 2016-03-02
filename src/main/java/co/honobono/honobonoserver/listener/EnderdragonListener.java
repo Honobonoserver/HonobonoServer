@@ -50,7 +50,7 @@ public class EnderdragonListener implements Listener {
 			loc.getWorld().playEffect(new Location(loc.getWorld(), loc.getX() + Math.sin(Math.toRadians(i)) * 2,
 					loc.getY(), loc.getZ() + Math.cos(Math.toRadians(i)) * 2), Effect.PORTAL, 10);
 		}
-		player.playSound(loc, Sound.ENDERDRAGON_GROWL, 10, 10);
+		player.playSound(loc, Sound.ENTITY_ENDERDRAGON_HURT, 10, 10);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
