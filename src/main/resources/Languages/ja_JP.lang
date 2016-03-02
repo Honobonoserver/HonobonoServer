@@ -30,6 +30,7 @@ honobonoserver:
         health: "体力: <Health>/<MaxHealth>"
         location:
             name: "座標:"
+            world: "    World: <World>"
             x: "    X: <X>"
             y: "    Y: <Y>"
             z: "    Z: <Z>"

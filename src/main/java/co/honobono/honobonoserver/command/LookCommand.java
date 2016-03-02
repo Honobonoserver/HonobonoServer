@@ -52,6 +52,7 @@ public class LookCommand {
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.health").replaceAll("<Health>", String.valueOf(player.getHealth())).replaceAll("<MaxHealth>", String.valueOf(player.getMaxHealth())));
 			Location loc = player.getLocation();
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.location.name"));
+			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.location.world").replaceAll("<World>", String.valueOf(loc.getWorld())));
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.location.x").replaceAll("<X>", String.valueOf(loc.getX())));
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.location.y").replaceAll("<Y>", String.valueOf(loc.getY())));
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.location.z").replaceAll("<Z>", String.valueOf(loc.getZ())));

@@ -30,6 +30,7 @@ honobonoserver:
         health: "HP: <Health>/<MaxHealth>"
         location:
             name: "place:"
+            world: "    World: <World>"
             x: "    X: <X>"
             y: "    Y: <Y>"
             z: "    Z: <Z>"
