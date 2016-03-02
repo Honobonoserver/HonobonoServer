@@ -47,7 +47,7 @@ honobonoserver:
           - "&5+-----------&aServer Info&5-----------+"
           - "&5|&e  No any infomations     &5|"
           - "&5+---------------------------------+"
-        quitmessage: "<Player> left server"
+        quitmessage: "<Player> left the server"
     warning:
         ingame: "You must do this in the game"
         arguments: "Not enough argument"
