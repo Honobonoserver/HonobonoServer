@@ -2,6 +2,7 @@ package co.honobono.honobonoserver.listener;
 
 import co.honobono.honobonoserver.HonobonoServer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -18,9 +19,9 @@ public class DisplayCommandListener implements Listener {
 
 	@EventHandler
 	public void sendCommand(PlayerCommandPreprocessEvent event) {
-		Bukkit.broadcast(this.plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.display.format")
-				.replaceAll("<Player>", event.getPlayer().getDisplayName()).replaceAll("<Command>", event.getMessage())
-				, "honobonoserver.showcommand");
+		Bukkit.broadcast(ChatColor.GRAY + this.plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.display.format")
+				.replaceAll("<Player>", event.getPlayer().getDisplayName())
+				.replaceAll("<Command>", event.getMessage()), "honobonoserver.showcommand");
 	}
 
 }

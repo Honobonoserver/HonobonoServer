@@ -28,7 +28,11 @@ public class HomeCommand {
 		Player player =  (Player) sender;
 		Location loc = HomeListener.getHome(this.plugin, player);
 		if (loc == null) {
-			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.home.notexits"));
+			if(player.getBedSpawnLocation() == null) {
+				sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.home.notexits"));
+			} else {
+				player.teleport(player.getBedSpawnLocation());
+			}
 		} else {
 			Location loc1 = player.getLocation();
 			LanguageHelper langs = this.plugin.getLanguages();

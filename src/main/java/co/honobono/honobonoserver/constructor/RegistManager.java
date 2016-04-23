@@ -197,7 +197,6 @@ public class RegistManager {
 		String Usage() default "Not added";
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static boolean hasListener(Class clazz) {
 		AddListener listener = (AddListener) clazz.getAnnotation(AddListener.class);
 		if (listener == null || !listener.value()) return false;
