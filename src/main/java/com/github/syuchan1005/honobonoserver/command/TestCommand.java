@@ -17,6 +17,7 @@ public class TestCommand {
 
 	@RegistManager.AddCommand (Command = "hn", subCommand = "test")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
+		// Test
 		return true;
 	}
 }
