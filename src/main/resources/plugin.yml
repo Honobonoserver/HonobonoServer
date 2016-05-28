@@ -1,4 +1,4 @@
 name: ${pom.artifactId}
 version: ${pom.version}
 author: syu_chan_1005
-main: co.honobono.honobonoserver.HonobonoServer
+main: com.github.syuchan1005.honobonoserver.HonobonoServer
