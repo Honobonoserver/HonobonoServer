@@ -1,26 +1,31 @@
 package co.honobono.honobonoserver;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.*;
-
 import co.honobono.honobonoserver.command.PocketChestCommand;
+import co.honobono.honobonoserver.constructor.CustomRecipe;
 import co.honobono.honobonoserver.constructor.LanguageHelper;
-import co.honobono.honobonoserver.util.InventoryUtil;
-import com.sun.javafx.collections.MappingChange;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import co.honobono.honobonoserver.constructor.RegistManager;
 import co.honobono.honobonoserver.constructor.SQLite;
 import co.honobono.honobonoserver.constructor.SQLite.Casts;
 import co.honobono.honobonoserver.runnable.EnderDragonMoveRunnable;
 import co.honobono.honobonoserver.runnable.WitherMoveRunnable;
+import co.honobono.honobonoserver.util.InventoryUtil;
 import co.honobono.honobonoserver.util.Other;
+import org.bukkit.Material;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HonobonoServer extends JavaPlugin {
 	private RegistManager manager;
@@ -32,6 +37,8 @@ public class HonobonoServer extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		try {
+			CustomRecipe.init(this);
+			this.setRecipe();
 			this.config = Other.getConfig(this, "config.yml");
 			this.inv = Other.getConfig(this, "pocketchest.yml");
 			this.langs = new LanguageHelper(this);
@@ -44,9 +51,16 @@ public class HonobonoServer extends JavaPlugin {
 					.add("Home-Y", Casts.INTEGER)
 					.add("Home-Z", Casts.INTEGER).create("Home");
 			this.manager = new RegistManager(this);
+			File addon = new File(this.getDataFolder(), "addon");
+			addon.mkdir();
+			for(File file : addon.listFiles((dir, name) -> name.endsWith(".jar"))) {
+				this.manager.loadClasses(file, false);
+				this.getLogger().info("LoadComplete: " + file.getName());
+			}
 			this.manager.registerCommand("hn", "HonobonoServer's Plugin Command.", "/hn(h) <options>", "honobonoserver.command", "You don't have Permission.", "h");
 		} catch (ReflectiveOperationException | IOException | SQLException | InvalidConfigurationException e) {
 			e.printStackTrace();
+
 		}
 		new EnderDragonMoveRunnable().runTaskTimer(this, 0, 5);
 		new WitherMoveRunnable().runTaskTimer(this, 0, 5);
@@ -69,6 +83,18 @@ public class HonobonoServer extends JavaPlugin {
 		}
 	}
 
+	private static void setRecipe() {
+		ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD);
+		ItemMeta itemMeta = itemStack.getItemMeta();
+		itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		itemMeta.addEnchant(Enchantment.DAMAGE_ALL, 2, false);
+		itemMeta.setDisplayName("つよいけん(こなみ)");
+		itemStack.setItemMeta(itemMeta);
+		CustomRecipe.addRecipe(new CustomRecipe.Shaped(itemStack, new String[]{"DDA", "ADD", "ASA"}
+				, new CustomRecipe.ShapedMaterial(new ItemStack(Material.DIAMOND), 'D')
+				, new CustomRecipe.ShapedMaterial(new ItemStack(Material.STICK), 'S')));
+	}
+
 	public FileConfiguration getConfigFile() {
 		return this.config;
 	}
@@ -88,4 +114,5 @@ public class HonobonoServer extends JavaPlugin {
 	public FileConfiguration getInv() {
 		return this.inv;
 	}
+
 }

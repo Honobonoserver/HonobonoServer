@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.honobono.honobonoserver.HonobonoServer;
+import co.honobono.honobonoserver.wrapper.DynmapAPIWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -28,13 +29,23 @@ public class ShowCommand {
 		Player player = (Player) sender;
 		if(Players.contains(player)) {
 			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.show.remove"));
-			Players.remove(player);
-			Bukkit.getOnlinePlayers().forEach(p -> p.showPlayer(player));
+			show(player);
 		} else {
 			sender.sendMessage(this.plugin.getLanguages().getString(player, "honobonoserver.show.add"));
-			Players.add(player);
-			Bukkit.getOnlinePlayers().forEach(p -> p.hidePlayer(player));
+			hide(player);
 		}
 		return true;
+	}
+
+	public static void show(Player player) {
+		Players.remove(player);
+		Bukkit.getOnlinePlayers().forEach(p -> p.showPlayer(player));
+		DynmapAPIWrapper.setPlayerVisiblity(player, true);
+	}
+
+	public static void hide(Player player) {
+		Players.add(player);
+		Bukkit.getOnlinePlayers().forEach(p -> p.hidePlayer(player));
+		DynmapAPIWrapper.setPlayerVisiblity(player, false);
 	}
 }

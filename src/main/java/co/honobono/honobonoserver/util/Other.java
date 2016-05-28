@@ -2,6 +2,7 @@ package co.honobono.honobonoserver.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -26,10 +27,14 @@ public class Other {
 		return ChatColor.translateAlternateColorCodes('&', text);
 	}
 
-	public static FileConfiguration getConfig(Plugin plugin, String filename) throws IOException, InvalidConfigurationException {
+	public static Reader getFileReader(Plugin plugin, String filename) throws IOException {
 		File file = new File(plugin.getDataFolder(), filename);
 		if (!file.exists()) plugin.saveResource(filename, false);
-		Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
+		return new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
+	}
+
+	public static FileConfiguration getConfig(Plugin plugin, String filename) throws IOException, InvalidConfigurationException {
+		Reader reader = getFileReader(plugin, filename);
 		FileConfiguration conf = new YamlConfiguration();
 		conf.load(reader);
 		return conf;
@@ -49,5 +54,14 @@ public class Other {
 
 	public static boolean include(Object obj, Object... objs) {
 		return Arrays.stream(objs).anyMatch(o -> o.equals(obj));
+	}
+
+	public static boolean isInt(String str) {
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

@@ -29,13 +29,24 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
     </repositories>
+
     <dependencies>
+
+
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.9-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>provided</scope>
+            <groupId>spigot1.9.jar</groupId>
+            <artifactId>spigot1.9.2.jar</artifactId>
+            <version>1.9.2</version>
+            <scope>system</scope>
+            <systemPath>${basedir}\lib\spigot-1.9.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>dynmap-2.3-alpha-2.jar</groupId>
+            <artifactId>dynmap-2.3-alpha-2.jar</artifactId>
+            <version>2.3-alpha-2</version>
+            <scope>system</scope>
+            <systemPath>${basedir}\lib\dynmap-2.3-alpha-2.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

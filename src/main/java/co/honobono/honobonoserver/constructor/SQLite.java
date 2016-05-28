@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2016- syu_chan_1005
+ * Released under the MIT license
+ * http://opensource.org/licenses/mit-license.php
+ */
+
 package co.honobono.honobonoserver.constructor;
 
 import java.io.File;
@@ -13,7 +19,7 @@ import java.util.Map;
 
 public class SQLite {
 
-	public static enum Casts {
+	public enum Casts {
 		INTEGER("INTEGER"),
 		TEXT("TEXT"),
 		BLOB("BLOB"),
@@ -77,6 +83,7 @@ public class SQLite {
 		sql = sql.substring(0, sql.length() - 1);
 		sql += ");";
 		executeUpdate(sql);
+		this.map = null;
 	}
 
 	/**

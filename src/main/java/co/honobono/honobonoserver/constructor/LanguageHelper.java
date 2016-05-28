@@ -34,7 +34,7 @@ public class LanguageHelper {
 				Configs.put(name[name.length - 1].replaceAll(".lang", ""), getConfig(plugin, Name));
 			}
 		} finally {
-			jar.close();
+			if(jar != null) jar.close();
 		}
 	}
 
@@ -91,11 +91,13 @@ public class LanguageHelper {
 		return conf;
 	}
 
+	private static Method handleMethod = null;
+    private static Field localeField = null;
 	public static String getLocale(Player player) throws ReflectiveOperationException {
-		Method method = player.getClass().getDeclaredMethod("getHandle");
-		Object o = method.invoke(player);
-		Field field = o.getClass().getField("locale");
-		return (String)field.get(o);
+        if (handleMethod == null) handleMethod = player.getClass().getDeclaredMethod("getHandle");
+		Object o = handleMethod.invoke(player);
+		if(localeField == null) localeField = o.getClass().getField("locale");
+		return (String)localeField.get(o);
 	}
 
 	private static String toColor(String msg) {

@@ -10,3 +10,14 @@ Elevator:
 - EMERALD_BLOCK:64
 - GOLD_BLOCK:128
 - DIAMOND_BLOCK:256
+
+OverridePluginCommand:
+    Enable: true
+    Content: |
+        "てすと"
+
+# <world>, <message>, <player>, <prefix>. <suffix>
+ChatFormat: "[<prefix>]<<player>> <message>"
+
+PassWordSign:
+    - "Tutorial:test"

@@ -14,6 +14,7 @@ import co.honobono.honobonoserver.util.Other;
 
 @AddListener
 public class ChangeMotdListener implements Listener {
+	private static Random random = new Random();
 	private HonobonoServer plugin;
 
 	public ChangeMotdListener(HonobonoServer plugin) {
@@ -23,8 +24,8 @@ public class ChangeMotdListener implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onServerListPing(ServerListPingEvent event){
 		List<String> Motd = this.plugin.getConfigFile().getStringList("Motd");
-		String motd = Motd.get(new Random().nextInt(Motd.size()));
-		if (!(motd.length() == 0)) event.setMotd(Other.color(motd, null));
+		String motd = Motd.get(random.nextInt(Motd.size()));
+		if (motd.length() != 0) event.setMotd(Other.color(motd, null));
 	}
 
 }
