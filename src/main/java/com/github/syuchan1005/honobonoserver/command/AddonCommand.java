@@ -17,11 +17,9 @@ public class AddonCommand {
 		this.plugin = plugin;
 	}
 
-	@RegistManager.AddCommand(Command = "hn", subCommand = "addon")
+	@RegistManager.AddCommand(Command = "hn", subCommand = "addon", Permission = "hns.c.addon")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
-		for(File file : plugin.getManager().getAddonFile()) {
-			sender.sendMessage(file.getName());
-		}
+		for(File file : plugin.getManager().getAddonFile()) sender.sendMessage(file.getName());
 		return true;
 	}
 }
