@@ -1,8 +1,10 @@
 package com.github.syuchan1005.honobonoserver.runnable;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
+import com.github.syuchan1005.honobonoserver.listener.EnderdragonListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,11 +14,18 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class EnderDragonMoveRunnable extends BukkitRunnable {
 	public static List<World> worlds = Bukkit.getWorlds().stream()
 			.filter(w -> w.getEnvironment() == Environment.THE_END).collect(Collectors.toList());
+	private static Random random = new Random();
+	private Plugin plugin;
+
+	public EnderDragonMoveRunnable(Plugin plugin) {
+		this.plugin = plugin;
+	}
 
 	@Override
 	public void run() {
@@ -34,9 +43,7 @@ public class EnderDragonMoveRunnable extends BukkitRunnable {
 						for (int z = Z - radius; z <= Z + radius; z++) {
 							if ((X - x) * (X - x) + (Y - y) * (Y - y) + (Z - z) * (Z - z) <= radiusSquared) {
 								Block b = new Location(world, x, y, z).getBlock();
-								if (b.getType() != Material.BEDROCK) {
-									b.setType(Material.AIR);
-								}
+								if (b.getType() != Material.BEDROCK) b.setType(Material.AIR);
 							}
 						}
 					}
@@ -51,6 +58,9 @@ public class EnderDragonMoveRunnable extends BukkitRunnable {
 						d.setMaxHealth(600.0D);
 						d.setHealth(600.0D);
 					}
+				}
+				if(random.nextInt(100) == 1) {
+					world.getPlayers().forEach(player -> EnderdragonListener.fireFireball(player, plugin));
 				}
 			}
 		}
