@@ -3,6 +3,7 @@ package com.github.syuchan1005.honobonoserver.listener;
 import com.github.syuchan1005.honobonoserver.HonobonoServer;
 import com.github.syuchan1005.honobonoserver.constructor.RegistManager;
 import com.github.syuchan1005.honobonoserver.util.AnvilGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -41,7 +42,7 @@ public class PassWordSignListener implements Listener {
 			anvilGUI.open();
 		} catch (ReflectiveOperationException e) {
 			e.printStackTrace();
-			event.getPlayer().sendMessage("Error");
+			event.getPlayer().sendMessage(plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.passwordsign.openerror"));
 		}
 	}
 
@@ -107,6 +108,8 @@ public class PassWordSignListener implements Listener {
 					player.teleport(tp.add(0.5, y, -1.5));
 					break;
 			}
+		} else {
+			player.sendMessage(plugin.getLanguages().getString(player, "honobonoserver.passwordsign.failed"));
 		}
 	}
 }
