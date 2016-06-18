@@ -13,37 +13,17 @@ import org.bukkit.util.Vector;
 import com.github.syuchan1005.honobonoserver.constructor.RegistManager.AddListener;
 
 
-
 @AddListener
 public class EnderCrystalListener implements Listener {
-	Random ran = new Random();
+	private static int[] deg = {0, 45, 90, 135, 180, 225, 270, 315, 360};
 
 	@EventHandler
 	public void Explode(EntityDamageByEntityEvent event) {
 		Entity ent = event.getEntity();
 		if (ent.getType() == EntityType.ENDER_CRYSTAL) {
 			Location loc = ent.getLocation();
-			Entity tnt = loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
-			for (int count = 0; count <= 1; count++) {
-				tnt.setVelocity(new Vector(((double) ran.nextInt(11) / 10), ((double) ran.nextInt(11) / 10), 0));
-				tnt = loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
-				tnt.setVelocity(new Vector(-((double) ran.nextInt(11) / 10), ((double) ran.nextInt(11) / 10), 0));
-				tnt = loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
-				tnt.setVelocity(new Vector(0, ((double) ran.nextInt(11) / 10), ((double) ran.nextInt(11) / 10)));
-				tnt = loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
-				tnt.setVelocity(new Vector(0, ((double) ran.nextInt(11) / 10), -((double) ran.nextInt(11) / 10)));
-				tnt = loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
-				tnt.setVelocity(new Vector(((double) ran.nextInt(11) / 10), ((double) ran.nextInt(11) / 10),
-						((double) ran.nextInt(11) / 10)));
-				tnt = loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
-				tnt.setVelocity(new Vector(-((double) ran.nextInt(11) / 10), ((double) ran.nextInt(11) / 10),
-						-((double) ran.nextInt(11) / 10)));
-				tnt = loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
-				tnt.setVelocity(new Vector(((double) ran.nextInt(11) / 10), ((double) ran.nextInt(11) / 10),
-						-((double) ran.nextInt(11) / 10)));
-				tnt = loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT);
-				tnt.setVelocity(new Vector(-((double) ran.nextInt(11) / 10), ((double) ran.nextInt(11) / 10),
-						((double) ran.nextInt(11) / 10)));
+			for (int j = 0; j < 24; j++) {
+				loc.getWorld().spawnEntity(loc, EntityType.PRIMED_TNT).setVelocity(new Vector(Math.cos(j * 15), 0.3, Math.sin(j * 15)));
 			}
 		}
 	}
