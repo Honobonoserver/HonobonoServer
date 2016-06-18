@@ -17,7 +17,7 @@ public class AdminChatCommand {
 		this.plugin = plugin;
 	}
 
-	@RegistManager.AddCommand(Command = "hn", subCommand = "adminchat", Aliases = "a")
+	@RegistManager.AddCommand(Command = "hn", subCommand = "adminchat", Aliases = "a", Permission = "hns.c.adminchat")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.warning.ingame"));
