@@ -18,7 +18,7 @@ public class MuteCommand {
 		this.plugin = plugin;
 	}
 
-	@RegistManager.AddCommand(Command = "hn", subCommand = "mute", Aliases = "m")
+	@RegistManager.AddCommand(Command = "hn", subCommand = "mute", Aliases = "m", Permission = "hns.c.mute")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		if(args.length != 2) {
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.warning.arguments"));
