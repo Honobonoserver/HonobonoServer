@@ -1,7 +1,6 @@
 package com.github.syuchan1005.honobonoserver;
 
 import com.github.syuchan1005.honobonoserver.command.PocketChestCommand;
-import com.github.syuchan1005.honobonoserver.constructor.CustomRecipe;
 import com.github.syuchan1005.honobonoserver.constructor.LanguageHelper;
 import com.github.syuchan1005.honobonoserver.constructor.RegistManager;
 import com.github.syuchan1005.honobonoserver.constructor.SQLite;
@@ -9,14 +8,9 @@ import com.github.syuchan1005.honobonoserver.runnable.EnderDragonMoveRunnable;
 import com.github.syuchan1005.honobonoserver.runnable.WitherMoveRunnable;
 import com.github.syuchan1005.honobonoserver.util.InventoryUtil;
 import com.github.syuchan1005.honobonoserver.util.Other;
-import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -36,8 +30,6 @@ public class HonobonoServer extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		try {
-			CustomRecipe.init(this);
-			this.setRecipe();
 			this.config = Other.getConfig(this, "config.yml");
 			this.inv = Other.getConfig(this, "pocketchest.yml");
 			this.langs = new LanguageHelper(this);
@@ -56,22 +48,22 @@ public class HonobonoServer extends JavaPlugin {
 				this.manager.loadClasses(file, false);
 				this.getLogger().info("LoadComplete: " + file.getName());
 			}
-			this.manager.registerCommand("hn", "HonobonoServer's Plugin Command.", "/hn(h) <options>", "honobonoserver.command", "You don't have Permission.", "h");
+			this.manager.registerCommand("hn", "HonobonoServer's Plugin Command.", "/hn(h) <options>", "hns.c", "You don't have Permission.", "h");
 		} catch (ReflectiveOperationException | IOException | SQLException | InvalidConfigurationException e) {
 			e.printStackTrace();
 
 		}
-		new EnderDragonMoveRunnable().runTaskTimer(this, 0, 5);
+		new EnderDragonMoveRunnable(this).runTaskTimer(this, 0, 5);
 		new WitherMoveRunnable().runTaskTimer(this, 0, 5);
 	}
 
 	@Override
 	public void onDisable() {
 		Map<String, Inventory> map = PocketChestCommand.getMap();
-		if(map != null) {
+		if (map != null) {
 			Map<String, String> a = new HashMap<>();
 			try {
-				for(Map.Entry<String, Inventory> entry : map.entrySet()) {
+				for (Map.Entry<String, Inventory> entry : map.entrySet()) {
 					a.put(entry.getKey(), InventoryUtil.serialize(entry.getValue()));
 				}
 				this.getInv().set("Inventories", Arrays.asList(a));
@@ -82,20 +74,12 @@ public class HonobonoServer extends JavaPlugin {
 		}
 	}
 
-	private static void setRecipe() {
-		ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD);
-		ItemMeta itemMeta = itemStack.getItemMeta();
-		itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		itemMeta.addEnchant(Enchantment.DAMAGE_ALL, 2, false);
-		itemMeta.setDisplayName("つよいけん(こなみ)");
-		itemStack.setItemMeta(itemMeta);
-		CustomRecipe.addRecipe(new CustomRecipe.Shaped(itemStack, new String[]{"DDA", "ADD", "ASA"}
-				, new CustomRecipe.ShapedMaterial(new ItemStack(Material.DIAMOND), 'D')
-				, new CustomRecipe.ShapedMaterial(new ItemStack(Material.STICK), 'S')));
-	}
-
 	public FileConfiguration getConfigFile() {
 		return this.config;
+	}
+
+	public void reloadConfigFile() throws IOException, InvalidConfigurationException {
+		this.config = Other.getConfig(manager.getPlugin(), "config.yml");
 	}
 
 	public SQLite getSQLite() {
