@@ -19,5 +19,7 @@ OverridePluginCommand:
 # <world>, <message>, <player>, <prefix>. <suffix>
 ChatFormat: "[<prefix>]<<player>> <message>"
 
+EndWorld: TheEnd
+
 PassWordSign:
     - "Tutorial:test"
