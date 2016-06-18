@@ -31,7 +31,6 @@ public class WitherMoveRunnable extends BukkitRunnable {
 	public void run() {
 		for (World world : worlds) {
 			for (Entity e : world.getEntitiesByClass(Wither.class)) {
-				// エフェクト
 				Location loc = e.getLocation();
 				int X = loc.getBlockX();
 				int Y = loc.getBlockY();
