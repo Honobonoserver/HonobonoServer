@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.github.syuchan1005.honobonoserver.HonobonoServer;
 import com.github.syuchan1005.honobonoserver.constructor.SQLite;
+import org.bukkit.scheduler.BukkitRunnable;
 
 
 @RegistManager.AddListener
@@ -31,13 +32,18 @@ public class HomeListener implements Listener {
 		if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 		if (event.getClickedBlock().getType() != Material.BED_BLOCK) return;
 		Location bed = event.getClickedBlock().getLocation();
-		try {
-			this.plugin.getSQLite().checkPut("Home", "PlayerUUID", event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(),
-					SQLite.getTimeStamp(), bed.getWorld().getName(), bed.getBlockX(), bed.getBlockY(), bed.getBlockZ());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		event.getPlayer().sendMessage(this.plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.home.success"));
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					plugin.getSQLite().checkPut("Home", "PlayerUUID", event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(),
+							SQLite.getTimeStamp(), bed.getWorld().getName(), bed.getBlockX(), bed.getBlockY(), bed.getBlockZ());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				event.getPlayer().sendMessage(plugin.getLanguages().getString(event.getPlayer(), "honobonoserver.home.success"));
+			}
+		}.runTask(plugin);
 	}
 
 	@EventHandler
