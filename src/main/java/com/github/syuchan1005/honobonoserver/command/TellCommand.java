@@ -15,7 +15,7 @@ public class TellCommand {
 		this.plugin= plugin;
 	}
 
-	@RegistManager.AddCommand(Command = "hn", subCommand = "tell", Aliases = {"t"})
+	@RegistManager.AddCommand(Command = "hn", subCommand = "tell", Aliases = {"t"}, Permission = "hns.c.tell")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		String msg = "";
 		for (int i = 1; i < args.length; i++) {
