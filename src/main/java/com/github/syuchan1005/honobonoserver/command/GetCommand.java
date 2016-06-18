@@ -19,14 +19,14 @@ public class GetCommand {
 		this.plugin = plugin;
 	}
 
-	@AddCommand(Command = "hn", subCommand = "get")
+	@AddCommand(Command = "hn", subCommand = "get", Permission = "hns.c.get")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		if(!(sender instanceof Player)) {
-			sender.sendMessage("Dont Player");
+			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.warning.ingame"));
 			return true;
 		}
 		if(!(args.length <= 3 && args.length >= 2)) {
-			sender.sendMessage("Invocation Args");
+			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.warning.arguments"));
 			return true;
 		}
 		String name = args[1] + ":";
