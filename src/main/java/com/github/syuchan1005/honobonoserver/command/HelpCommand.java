@@ -19,7 +19,7 @@ public class HelpCommand {
 		return true;
 	}
 
-	@AddCommand(Command = "hn", subCommand = "help")
+	@AddCommand(Command = "hn", subCommand = "help", Permission = "hns.c.help")
 	public boolean onCommand2(CommandSender sender, Command cmd, String[] args) {
 		this.plugin.getManager().sendHelpMessage(sender, "hn");
 		return true;
