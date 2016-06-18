@@ -20,8 +20,6 @@ public class ShowListener implements Listener {
 	@EventHandler
 	public void onQuitEvent(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
-		if(ShowCommand.Players.contains(player)) {
-			ShowCommand.show(player);
-		}
+		if(ShowCommand.Players.contains(player)) ShowCommand.show(player);
 	}
 }
