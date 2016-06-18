@@ -18,7 +18,7 @@ public class FreezeCommand {
 		this.plugin = plugin;
 	}
 
-	@RegistManager.AddCommand(Command = "hn", subCommand = "freeze", Aliases = "f")
+	@RegistManager.AddCommand(Command = "hn", subCommand = "freeze", Aliases = "f", Permission = "hns.c.freeze")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		if(args.length != 2) {
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.warning.arguments"));
