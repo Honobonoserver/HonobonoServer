@@ -28,7 +28,7 @@ public class AnvilGUI {
 	private Inventory inv;
 	private Listener listener;
 
-	public AnvilGUI(JavaPlugin plugin, Player player, final AnvilClickEventHandler handler){
+	public AnvilGUI(JavaPlugin plugin, Player player, final AnvilClickEventHandler handler) {
 		this.player = player;
 		this.handler = handler;
 
@@ -115,7 +115,6 @@ public class AnvilGUI {
 					return anvilSlot;
 				}
 			}
-
 			return null;
 		}
 	}
