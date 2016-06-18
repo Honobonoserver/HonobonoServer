@@ -9,12 +9,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.github.syuchan1005.honobonoserver.constructor.RegistManager.AddListener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 @AddListener
-public class LoginMessageListener implements Listener {
+public class LoginMessageandSpawnListener implements Listener {
 	private HonobonoServer plugin;
 
-	public LoginMessageListener(HonobonoServer plugin) {
+	public LoginMessageandSpawnListener(HonobonoServer plugin) {
 		this.plugin = plugin;
 	}
 
@@ -24,9 +25,13 @@ public class LoginMessageListener implements Listener {
 		Player player = event.getPlayer();
 		Bukkit.getOnlinePlayers().stream().forEach(p -> {
 			p.sendMessage(this.plugin.getLanguages().getString(p, "honobonoserver.loginmessage.joinmessage").replaceAll("<Player>", player.getDisplayName()));
-			if(!player.hasPlayedBefore())p.sendMessage(this.plugin.getLanguages().getStringList(p, "honobonoserver.loginmessage.firstjoin")
-					.stream().map(s -> s.replaceAll("<Player>", player.getDisplayName())).toArray(String[]::new));
+			if(!player.hasPlayedBefore()) {
+				p.sendMessage(this.plugin.getLanguages().getStringList(p, "honobonoserver.loginmessage.firstjoin")
+						.stream().map(s -> s.replaceAll("<Player>", player.getDisplayName())).toArray(String[]::new));
+			}
 		});
+		player.sendMessage(this.plugin.getLanguages().getStringList(player, "honobonoserver.loginmessage.joinplayer")
+				.stream().map(s -> s.replaceAll("<Player>", player.getDisplayName())).toArray(String[]::new));
 	}
 
 	@EventHandler
