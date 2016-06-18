@@ -20,7 +20,7 @@ public class InfoCommand {
 		this.plugin = plugin;
 	}
 
-	@RegistManager.AddCommand (Command = "hn", subCommand = "info")
+	@RegistManager.AddCommand (Command = "hn", subCommand = "info", Permission = "hns.c.info")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		if(!(sender instanceof Player) || args.length != 2) return false;
 		String str;
