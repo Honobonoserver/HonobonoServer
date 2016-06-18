@@ -19,8 +19,8 @@ public class ShowCommand {
 	public ShowCommand(HonobonoServer plugin) {
 		this.plugin = plugin;
 	}
-
-	@AddCommand(Command = "hn", subCommand = "show", Aliases = "s")
+	
+	@AddCommand(Command = "hn", subCommand = "show", Aliases = "s", Permission = "hns.c.show")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.warning.ingame"));
