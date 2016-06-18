@@ -2,6 +2,7 @@ package com.github.syuchan1005.honobonoserver.listener;
 
 import com.github.syuchan1005.honobonoserver.HonobonoServer;
 import com.github.syuchan1005.honobonoserver.constructor.RegistManager;
+import com.github.syuchan1005.honobonoserver.util.Other;
 import com.github.syuchan1005.honobonoserver.wrapper.PermissionsExWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,15 +23,14 @@ public class ChatFormatListener implements Listener {
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent event) {
 		String format = formatText(plugin.getConfigFile().getString("ChatFormat"), event.getMessage(), event.getPlayer());
-		event.setFormat(format);
+		event.setFormat(Other.color(format, event.getPlayer()));
 	}
 
 	public static String formatText(String format, String message, Player player) {
-		format = format.replaceAll("<message>", message);
-		format = format.replaceAll("<player>" , player.getDisplayName());
-		format = format.replaceAll("<prefix>" , PermissionsExWrapper.getPrefix(player));
-		format = format.replaceAll("<suffix>" , PermissionsExWrapper.getSuffix(player));
-		format = format.replaceAll("<world>"  , player.getWorld().getName());
-		return format;
+		return format.replaceAll("<message>", message)
+				.replaceAll("<player>" , player.getDisplayName())
+				.replaceAll("<prefix>" , PermissionsExWrapper.getPrefix(player))
+				.replaceAll("<suffix>" , PermissionsExWrapper.getSuffix(player))
+				.replaceAll("<world>"  , player.getWorld().getName());
 	}
 }
