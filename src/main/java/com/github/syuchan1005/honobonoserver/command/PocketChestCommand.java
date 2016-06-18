@@ -38,7 +38,7 @@ public class PocketChestCommand {
 		}
 	}
 
-	@AddCommand(Command = "hn", subCommand = "pocketchest", Aliases = { "chest", "pocket" })
+	@AddCommand(Command = "hn", subCommand = "pocketchest", Aliases = { "chest", "pocket" }, Permission = "hns.c.pocketchest")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.warning.ingame"));
