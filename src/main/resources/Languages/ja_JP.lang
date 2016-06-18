@@ -1,6 +1,13 @@
 honobonoserver:
+    plugin:
+        reload:
+            success: "Reloadが完了しました。"
+            failed: "Reloadに失敗しました。"
     help:
         enter: "helpを参照したい場合は/hn helpと入力してください"
+    passwordsign:
+        openerror: "GUIを開くことができませんでした。Adminにお問い合わせください"
+        failed: "Passwordが違います"
     adminchat:
         add: "AdminChatに入りました"
         remove: "AdminChatから抜けました"
@@ -36,6 +43,7 @@ honobonoserver:
             z: "    Z: <Z>"
             pitch: "    Pitch: <Pitch>"
             yaw: "    Yaw: <Yaw>"
+        address: "IPアドレス: <Address>"
         hostname: "ホスト名: <Name>"
     loginmessage:
         joinmessage: "&e<Player>さんが&aログイン&eしました"

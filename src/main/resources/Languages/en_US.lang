@@ -1,6 +1,13 @@
 honobonoserver:
+    plugin:
+        reload:
+            success: "Reload was successful."
+            failed: "Reload was failed."
     help:
       enter: "You can enter the /hn help Command."
+    passwordsign:
+        openerror: "Don't open GUI. Please, report Admin."
+        failed: "Password failed."
     adminchat:
         add: "Enter to AdminChat"
         remove: "Exiting AdminChat"
@@ -36,6 +43,7 @@ honobonoserver:
             z: "    Z: <Z>"
             pitch: "    Pitch: <Pitch>"
             yaw: "    Yaw: <Yaw>"
+        address: "IP Address: <Address>"
         hostname: "Hostname: <Name>"
     loginmessage:
         joinmessage: "<Player> joined this server"
