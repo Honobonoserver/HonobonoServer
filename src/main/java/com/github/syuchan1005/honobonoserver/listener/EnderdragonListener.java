@@ -2,6 +2,7 @@ package com.github.syuchan1005.honobonoserver.listener;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
@@ -17,12 +18,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EnderDragonChangePhaseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -40,11 +44,12 @@ public class EnderdragonListener implements Listener {
 
 	@EventHandler
 	public void Fireball(EntityTargetEvent event) {
-		if (!(event.getEntity().getType() == EntityType.ENDER_DRAGON))
-			return;
-		if (!(event.getTarget() instanceof Player))
-			return;
-		Player player = (Player) event.getTarget();
+		if (!(event.getEntity().getType() == EntityType.ENDER_DRAGON)) return;
+		if (!(event.getTarget() instanceof Player)) return;
+		fireFireball((Player) event.getTarget(), plugin);
+	}
+
+	public static void fireFireball(Player player, Plugin plugin) {
 		Location loc = player.getLocation();
 		for (float i = 0; i < 360; i = (float) (i + 0.5)) {
 			loc.getWorld().playEffect(new Location(loc.getWorld(), loc.getX() + Math.sin(Math.toRadians(i)) * 2,
@@ -74,17 +79,15 @@ public class EnderdragonListener implements Listener {
 					}
 				}.runTaskLater(plugin, 3L);
 			}
-		}.runTaskLater(this.plugin, 70L);
+		}.runTaskLater(plugin, 70L);
 	}
 
 	@EventHandler
 	public void onBomberTntDamagePlayer(EntityDamageByEntityEvent event) {
 		if (event.getEntity() instanceof Player && event.getDamager() instanceof TNTPrimed) {
-			if (!event.getDamager().getMetadata("ENDTNT").get(0).asBoolean())
-				return;
+			if (!event.getDamager().getMetadata("ENDTNT").get(0).asBoolean()) return;
 			Player player = (Player) event.getEntity();
-			if (player.getLocation().getWorld().getEnvironment() != Environment.THE_END)
-				return;
+			if (player.getLocation().getWorld().getEnvironment() != Environment.THE_END) return;
 			player.setHealth(player.getHealth() - 8);
 		}
 	}
@@ -105,9 +108,9 @@ public class EnderdragonListener implements Listener {
 					dragon.remove();
 					Entity e = dragon.getLocation().getWorld().spawnEntity(dragon.getLocation(),
 							EntityType.ENDER_DRAGON);
-					e.setVelocity(new Vector(0, 1, 0));
 					e.setCustomName("AdvancedEnderdragon");
 					e.setMetadata("phase2", new FixedMetadataValue(plugin, true));
+					e.setVelocity(new Vector(0, 1, 0));
 				}
 			}.runTaskLater(this.plugin, 200L);
 		}
@@ -115,9 +118,8 @@ public class EnderdragonListener implements Listener {
 
 	@EventHandler
 	public void onChangeEXP(EntityDeathEvent event) {
-		if (!(event.getEntity().getMetadata("phase2").size() >= 1
-				&& event.getEntity().getMetadata("phase2").get(0).asBoolean())) {
-			if (event.getEntity().getType() == EntityType.ENDER_DRAGON) {
+		if(event.getEntity().getType() == EntityType.ENDER_DRAGON) {
+			if (!event.getEntity().hasMetadata("phase2") || !event.getEntity().getMetadata("phase2").get(0).asBoolean()) {
 				event.setDroppedExp(0);
 			}
 		}
