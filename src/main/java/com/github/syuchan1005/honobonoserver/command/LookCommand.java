@@ -21,7 +21,7 @@ public class LookCommand {
 	}
 
 	@SuppressWarnings("deprecation")
-	@AddCommand(Command = "hn", subCommand = "look", Aliases = "l")
+	@AddCommand(Command = "hn", subCommand = "look", Aliases = "l", Permission = "hns.c.look")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		Player player = null;
 		if (args.length == 1) {
@@ -58,6 +58,7 @@ public class LookCommand {
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.location.z").replaceAll("<Z>", String.valueOf(loc.getZ())));
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.location.pitch").replaceAll("<Pitch>", String.valueOf(loc.getPitch())));
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.location.yaw").replaceAll("<Yaw>", String.valueOf(loc.getYaw())));
+			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.address").replaceAll("<Address>", player.getAddress().getAddress().toString()));
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.look.hostname").replaceAll("<Name>", player.getAddress().getHostName()));
 		}
 		return true;
