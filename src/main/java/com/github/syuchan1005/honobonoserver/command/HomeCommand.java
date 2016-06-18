@@ -18,7 +18,7 @@ public class HomeCommand {
 		this.plugin = plugin;
 	}
 
-	@AddCommand(Command = "hn", subCommand = "home", Aliases = "h")
+	@AddCommand(Command = "hn", subCommand = "home", Aliases = "h", Permission = "hns.c.home")
 	public boolean onCommand(CommandSender sender, Command cmd, String[] args) {
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(this.plugin.getLanguages().getString(sender, "honobonoserver.warning.ingame"));
